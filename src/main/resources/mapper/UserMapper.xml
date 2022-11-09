@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxmzu.score.mapper.UserMapper">
+
+    <resultMap type="User" id="UserResult">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPwd" column="user_pwd"/>
+        <result property="userType" column="user_type"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectUserVo">
+        select u.user_id, u.user_name, u.user_pwd, u.user_type, u.start_time, u.end_time,
+        u.nick_name, u.create_by, u.create_time, u.update_by, u.update_time
+        from user u
+    </sql>
+
+    <select id="selectUserList" parameterType="User" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        <where>
+            <if test="userName!=null and userName!=''">
+                u.user_name = #{userName}
+            </if>
+        </where>
+
+    </select>
+
+
+</mapper>
