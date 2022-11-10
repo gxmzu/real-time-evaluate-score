@@ -7,9 +7,9 @@ import com.gxmzu.score.service.UserService;
 import com.gxmzu.score.utils.HttpStatus;
 import com.gxmzu.score.utils.RedisCache;
 import com.gxmzu.score.utils.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,10 +21,10 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController extends BaseController {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
-    @Autowired
+    @Resource
     private RedisCache redisCache;
 
     @PostMapping("/login")

@@ -3,9 +3,9 @@ package com.gxmzu.score.service.impl;
 import com.gxmzu.score.domain.entity.Contestant;
 import com.gxmzu.score.mapper.ContestantMapper;
 import com.gxmzu.score.service.ContestantService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class ContestantServiceImpl implements ContestantService {
 
-    @Autowired
+    @Resource
     private ContestantMapper contestantMapper;
 
     @Override
