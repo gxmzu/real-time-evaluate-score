@@ -1,0 +1,52 @@
+package com.gxmzu.score.interceptor;
+
+import com.alibaba.fastjson.JSON;
+import com.gxmzu.score.domain.AjaxResult;
+import com.gxmzu.score.domain.entity.User;
+import com.gxmzu.score.service.TokenService;
+import com.gxmzu.score.utils.HttpStatus;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * @Author: https://github.com/gxmzu
+ * @Date: 2022/11/10/21:00
+ * @Description: 全局拦截器
+ */
+public class GlobalInterceptor implements HandlerInterceptor {
+
+    @Resource
+    private TokenService tokenService;
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        User user = tokenService.getUser(request);
+        if (user == null) {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            String jsonStr = JSON.toJSONString(AjaxResult.error(HttpStatus.UNAUTHENTICATION, "未认证的请求"));
+            response.getWriter().write(jsonStr);
+            response.getWriter().flush();
+            return false;
+        }
+        // 验证令牌有效期，只有离过期还差20分钟内查刷新token
+        tokenService.verifyToken(user);
+        return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+
+    }
+}
