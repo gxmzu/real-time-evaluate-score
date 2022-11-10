@@ -2,12 +2,13 @@ package com.gxmzu.score.controller;
 
 import com.gxmzu.score.domain.AjaxResult;
 import com.gxmzu.score.domain.entity.User;
+import com.gxmzu.score.domain.model.LoginBody;
 import com.gxmzu.score.service.UserService;
+import com.gxmzu.score.utils.HttpStatus;
 import com.gxmzu.score.utils.RedisCache;
+import com.gxmzu.score.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +27,14 @@ public class UserController extends BaseController {
     @Autowired
     private RedisCache redisCache;
 
+    @PostMapping("/login")
+    public AjaxResult login(@RequestBody LoginBody loginBody) {
+        if (StringUtils.isEmpty(loginBody.getUserName()) || StringUtils.isEmpty(loginBody.getUserPwd())) {
+            return AjaxResult.error(HttpStatus.LACK_QUERY, "缺少请求参数");
+        }
+        return userService.login(loginBody.getUserName(), loginBody.getUserPwd());
+    }
+
     /**
      * 获取用户列表
      *
@@ -36,7 +45,7 @@ public class UserController extends BaseController {
     public AjaxResult getUserList(User user) {
         startPage(user);
         List<User> list = userService.getUserList(user);
-//        redisCache.setCacheList("userList", list);
         return getDataTable(list);
     }
+
 }

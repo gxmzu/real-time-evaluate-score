@@ -14,17 +14,27 @@ public interface UserService {
 
     /**
      * 获取用户列表
+     * @param user 用户查询信息
      *
      * @return 用户列表
      */
     public List<User> getUserList(User user);
 
     /**
-     * 用户登录
+     * 获取用户列表
+     * @param user 用户查询信息
      *
-     * @return 用户信息和token
+     * @return 用户列表
      */
-    public AjaxResult login();
+    public User getUserInfo(User user);
+
+    /**
+     * 用户登录
+     * @param userName 用户名
+     * @param userPwd 用户密码
+     * @return 用户信息和令牌
+     */
+    public AjaxResult login(String userName, String userPwd);
 
     /**
      * 重置密码

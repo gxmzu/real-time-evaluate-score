@@ -11,10 +11,10 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * spring redis 工具类
- *
- * @author ruoyi
- **/
+ * @Author: https://github.com/gxmzu
+ * @Date: 2022/11/10/0:03
+ * @Description: redis 工具类
+ */
 @SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
 public class RedisCache {

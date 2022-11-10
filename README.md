@@ -21,13 +21,13 @@
 
    国内已有比较成熟的解决方案，他们提供功能已经有评委评分、现场投票、打赏点赞、匿名评分可选、对评分对象进行多维度ABC测评、自定义指标类别、指标题型和权重分数、评分对象和评分人员，但大多面向大型赛事，针对小型赛事就有些复杂了。
 
-![img](img\clip_image002.jpg)
+![img](img/clip_image002.jpg)
 
-![img](img\clip_image004.jpg)
+![img](img/clip_image004.jpg)
 
-![img](img\clip_image006.jpg)
+![img](img/clip_image006.jpg)
 
-![img](img\clip_image008.jpg)
+![img](img/clip_image008.jpg)
 
 ### 项目评价
 

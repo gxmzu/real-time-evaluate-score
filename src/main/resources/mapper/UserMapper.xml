@@ -34,5 +34,14 @@
 
     </select>
 
+    <select id="selectUserByUserName" parameterType="User" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        <where>
+            <if test="userName!=null and userName!=''">
+                u.user_name = #{userName}
+            </if>
+        </where>
+    </select>
+
 
 </mapper>

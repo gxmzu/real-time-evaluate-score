@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.gxmzu.score.domain.AjaxResult;
 import com.gxmzu.score.domain.PageDomain;
 import com.gxmzu.score.domain.TableDataInfo;
+import com.gxmzu.score.utils.StringUtils;
 
 import java.util.List;
 
@@ -20,12 +21,12 @@ public class BaseController {
      * 设置请求分页数据
      */
     protected void startPage(PageDomain pageDomain) {
-        pageDomain.checkOrderQuery();
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
-        String orderBy = pageDomain.getOrderBy();
         Boolean reasonable = pageDomain.getReasonable();
-        PageHelper.startPage(pageNum, pageSize, orderBy).setReasonable(reasonable);
+        if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)){
+            PageHelper.startPage(pageNum, pageSize).setReasonable(reasonable);
+        }
     }
 
     /**

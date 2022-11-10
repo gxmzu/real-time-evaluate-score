@@ -19,11 +19,11 @@ public interface UserMapper {
     public List<User> selectUserList(User user);
 
     /**
-     * 查詢用戶
+     * 查询用户
      * @param user 用户信息
      * @return 用户信息
      */
-    public User getUserInfo(User user);
+    public User selectUserByUserName(User user);
 
     /**
      * 重置密码
