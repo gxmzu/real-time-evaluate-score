@@ -11,7 +11,7 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 10/11/2022 10:49:25
+ Date: 10/11/2022 22:11:32
 */
 
 SET NAMES utf8mb4;
@@ -77,12 +77,14 @@ INSERT INTO `match` VALUES (1, '第十一届校园十大歌手比赛', '简介xx
 DROP TABLE IF EXISTS `score`;
 CREATE TABLE `score`  (
   `user_id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户id',
-  `contestent_id` bigint(11) NOT NULL COMMENT '参赛对象id',
+  `match_id` bigint(20) NOT NULL COMMENT '比赛id',
+  `contestant_id` bigint(11) NOT NULL COMMENT '参赛者id',
+  `score` double(11, 0) NULL DEFAULT NULL COMMENT '得分',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `update_by` datetime(0) NULL DEFAULT NULL COMMENT '修改人',
-  PRIMARY KEY (`user_id`) USING BTREE
+  PRIMARY KEY (`user_id`, `match_id`, `contestant_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评委评分表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -122,10 +124,11 @@ CREATE TABLE `user_match`  (
   `user_id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `match_id` bigint(11) NULL DEFAULT NULL COMMENT '比赛id',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户比赛表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户比赛表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_match
 -- ----------------------------
+INSERT INTO `user_match` VALUES (2, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
