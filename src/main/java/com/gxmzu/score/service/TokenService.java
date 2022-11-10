@@ -5,12 +5,13 @@ import com.gxmzu.score.utils.Constants;
 import com.gxmzu.score.utils.RedisCache;
 import com.gxmzu.score.utils.StringUtils;
 import com.gxmzu.score.utils.uuid.IdUtils;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class TokenService {
     @Value("${token.expireTime}")
     private int expireTime;
 
-    @Autowired
+    @Resource
     private RedisCache redisCache;
 
     protected static final long MILLIS_SECOND = 1000;
@@ -82,6 +83,36 @@ public class TokenService {
     }
 
     /**
+     * 从令牌中获取数据声明
+     *
+     * @param token 令牌
+     * @return 数据声明
+     */
+    private Claims parseToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    /**
+     * 获取用户身份信息
+     *
+     * @param request 用户请求
+     * @return 用户信息
+     */
+    public User getUser(HttpServletRequest request) {
+        String token = getToken(request);
+        if (StringUtils.isNotEmpty(token)) {
+            Claims claims = parseToken(token);
+            String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
+            String userKey = Constants.LOGIN_TOKEN_KEY + uuid;
+            return redisCache.getCacheObject(userKey);
+        }
+        return null;
+    }
+
+    /**
      * 刷新令牌有效期
      *
      * @param user 登录信息
@@ -97,7 +128,7 @@ public class TokenService {
     /**
      * 获取请求token
      *
-     * @param request 请求
+     * @param request 用户请求
      * @return token 令牌
      */
     private String getToken(HttpServletRequest request) {
