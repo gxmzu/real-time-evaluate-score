@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxmzu.score.mapper.ContestantMapper">
+
+    <resultMap type="Contestant" id="ContestantResult">
+        <id property="contestantId" column="contestant_id"/>
+        <result property="matchId" column="match_id"/>
+        <result property="name" column="name"/>
+        <result property="info" column="info"/>
+        <result property="matchOrder" column="match_order"/>
+        <result property="isOpen" column="is_open"/>
+        <result property="score" column="score"/>
+        <result property="rank" column="rank"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectContestantVo">
+        select c.contestant_id, c.match_id, c.name, c.info, c.match_order, c.is_open,
+        c.score, c.rank, c.create_by, c.create_time, c.update_by, c.update_time
+        from contestant c
+    </sql>
+
+    <select id="selectContestantList" parameterType="Contestant" resultMap="ContestantResult">
+        <include refid="selectContestantVo"/>
+        <where>
+            <if test="name!=null and name!=''">
+                `name` = #{name}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="selectContestantByName" parameterType="Contestant" resultMap="ContestantResult">
+        <include refid="selectContestantVo"/>
+        <where>
+            <if test="name!=null and name!=''">
+                `name` = #{name}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

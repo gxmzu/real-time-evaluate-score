@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxmzu.score.mapper.MatchMapper">
+
+    <resultMap type="Match" id="MatchResult">
+        <result property="matchId" column="match_id"/>
+        <result property="matchName" column="match_name"/>
+        <result property="info" column="info"/>
+        <result property="maxScore" column="max_score"/>
+        <result property="scoreRuleName" column="score_rule_name"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectMatchVo">
+        select m.match_id, m.match_name, m.info, m.max_score, m.score_rule_name,m.create_by,
+        m.create_time, m.update_by, m.update_time
+        from `match` m
+    </sql>
+
+    <select id="selectMatchList" parameterType="Match" resultMap="MatchResult">
+        <include refid="selectMatchVo"/>
+        <where>
+            <if test="matchName!=null and matchName!=''">
+                `match_name` = #{matchName}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="selectMatchByMatchName" parameterType="Match" resultMap="MatchResult">
+        <include refid="selectMatchVo"/>
+        <where>
+            <if test="matchName!=null and matchName!=''">
+                `match_name` = #{matchName}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

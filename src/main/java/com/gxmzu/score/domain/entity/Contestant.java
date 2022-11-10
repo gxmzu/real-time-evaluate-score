@@ -10,14 +10,14 @@ import java.util.Date;
 /**
  * @Author: https://github.com/gxmzu
  * @Date: 2022/11/09/15:10
- * @Description: 参赛对象实体
+ * @Description: 参赛者实体
  */
-public class Contestent extends BaseEntity implements Serializable {
+public class Contestant extends BaseEntity implements Serializable {
 
     /**
-     * 参赛对象id
+     * 参赛者id
      */
-    private long contestentId;
+    private long contestantId;
 
     /**
      * 比赛id
@@ -25,7 +25,7 @@ public class Contestent extends BaseEntity implements Serializable {
     private long matchId;
 
     /**
-     * 参赛对象名称
+     * 参赛者名称
      */
     private String name;
 
@@ -78,12 +78,12 @@ public class Contestent extends BaseEntity implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    public long getContestentId() {
-        return contestentId;
+    public long getContestantId() {
+        return contestantId;
     }
 
-    public void setContestentId(long contestentId) {
-        this.contestentId = contestentId;
+    public void setContestantId(long contestantId) {
+        this.contestantId = contestantId;
     }
 
     public long getMatchId() {
@@ -176,8 +176,8 @@ public class Contestent extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "contestent{" +
-                "contestentId=" + contestentId +
+        return "Contestant{" +
+                "contestantId=" + contestantId +
                 ", matchId=" + matchId +
                 ", name='" + name + '\'' +
                 ", info='" + info + '\'' +

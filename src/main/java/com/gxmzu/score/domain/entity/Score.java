@@ -15,14 +15,14 @@ import java.util.Date;
 public class Score extends BaseEntity implements Serializable {
 
     /**
-     * 参赛对象id
+     * 参赛者id
      */
-    private long contestentid;
+    private long contestantId;
 
     /**
      * 用户id
      */
-    private long userid;
+    private long userId;
 
     /**
      * 得分
@@ -53,20 +53,20 @@ public class Score extends BaseEntity implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    public long getContestentid() {
-        return contestentid;
+    public long getContestantId() {
+        return contestantId;
     }
 
-    public void setContestentid(long contestentid) {
-        this.contestentid = contestentid;
+    public void setContestantId(long contestantId) {
+        this.contestantId = contestantId;
     }
 
-    public long getUserid() {
-        return userid;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUserid(long userid) {
-        this.userid = userid;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public double getScore() {
@@ -112,8 +112,8 @@ public class Score extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "Score{" +
-                "contestentid=" + contestentid +
-                ", userid=" + userid +
+                "contestantId=" + contestantId +
+                ", userId=" + userId +
                 ", score=" + score +
                 ", createBy='" + createBy + '\'' +
                 ", createTime=" + createTime +

@@ -11,18 +11,18 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 09/11/2022 21:21:27
+ Date: 10/11/2022 10:49:25
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for contestent
+-- Table structure for contestant
 -- ----------------------------
-DROP TABLE IF EXISTS `contestent`;
-CREATE TABLE `contestent`  (
-  `contestent_id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '参赛对象id',
+DROP TABLE IF EXISTS `contestant`;
+CREATE TABLE `contestant`  (
+  `contestant_id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '参赛对象id',
   `match_id` bigint(11) NOT NULL COMMENT '比赛id',
   `match_order` int(4) NULL DEFAULT NULL COMMENT '比赛顺序',
   `is_open` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '是否开启评分通道',
@@ -34,12 +34,20 @@ CREATE TABLE `contestent`  (
   `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `update_by` datetime(0) NULL DEFAULT NULL COMMENT '修改人',
-  PRIMARY KEY (`contestent_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '参赛对象表' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`contestant_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '参赛对象表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of contestent
+-- Records of contestant
 -- ----------------------------
+INSERT INTO `contestant` VALUES (1, 1, 1, '0', '参赛者1', '简介xxxx', NULL, NULL, '2022-11-10 10:27:39', 'xxxxx活动负责人', NULL, NULL);
+INSERT INTO `contestant` VALUES (2, 1, 2, '0', '参赛者2', '简介xxxx', NULL, NULL, '2022-11-10 10:27:39', 'xxxxx活动负责人', NULL, NULL);
+INSERT INTO `contestant` VALUES (3, 1, 3, '0', '参赛者3', '简介xxxx', NULL, NULL, '2022-11-10 10:27:39', 'xxxxx活动负责人', NULL, NULL);
+INSERT INTO `contestant` VALUES (4, 1, 4, '0', '参赛者4', '简介xxxx', NULL, NULL, '2022-11-10 10:27:39', 'xxxxx活动负责人', NULL, NULL);
+INSERT INTO `contestant` VALUES (5, 1, 5, '0', '参赛者5', '简介xxxx', NULL, NULL, '2022-11-10 10:27:39', 'xxxxx活动负责人', NULL, NULL);
+INSERT INTO `contestant` VALUES (6, 1, 6, '0', '参赛者6', '简介xxxx', NULL, NULL, '2022-11-10 10:27:39', 'xxxxx活动负责人', NULL, NULL);
+INSERT INTO `contestant` VALUES (7, 1, 7, '0', '参赛者7', '简介xxxx', NULL, NULL, '2022-11-10 10:27:39', 'xxxxx活动负责人', NULL, NULL);
+INSERT INTO `contestant` VALUES (8, 1, 8, '0', '参赛者8', '简介xxxx', NULL, NULL, '2022-11-10 10:27:39', 'xxxxx活动负责人', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for match
@@ -56,11 +64,12 @@ CREATE TABLE `match`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `update_by` datetime(0) NULL DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`match_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '比赛信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '比赛信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of match
 -- ----------------------------
+INSERT INTO `match` VALUES (1, '第十一届校园十大歌手比赛', '简介xxxxx', 100, '去掉最低分，去掉最高分，求平均分', '2022-11-10 10:25:06', 'xxxxx活动负责人', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for score
@@ -97,12 +106,13 @@ CREATE TABLE `user`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `update_by` datetime(0) NULL DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, '748912', 'd92d12', '1', '2022-11-09 19:56:48', '2022-11-12 19:56:54', 'xxxxx活动负责人', '2022-11-09 19:57:13', 'root', NULL, NULL);
+INSERT INTO `user` VALUES (1, 'root', '123456', '0', NULL, NULL, '管理员', '2022-11-10 10:26:50', NULL, NULL, NULL);
+INSERT INTO `user` VALUES (2, '748912', 'd92d12', '1', '2022-11-09 19:56:48', '2022-11-12 19:56:54', 'xxxxx活动负责人', '2022-11-09 19:57:13', 'root', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for user_match

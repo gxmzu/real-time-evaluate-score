@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Author: https://github.com/gxmzu
  * @Date: 2022/11/09/14:31
- * @Description: 用户接口
+ * @Description: 用户服务
  */
 public interface UserService {
 

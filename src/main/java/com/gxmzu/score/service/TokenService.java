@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @Author: https://github.com/gxmzu
  * @Date: 2022/11/09/23:56
- * @Description: 令牌工具类
+ * @Description: 令牌服务
  */
 @Service
 public class TokenService {
