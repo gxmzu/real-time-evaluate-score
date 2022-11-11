@@ -5,9 +5,9 @@
 <mapper namespace="com.gxmzu.score.mapper.ScoreMapper">
 
     <!-- 保存评委打分 -->
-    <insert id="saveScore" parameterType="Score">
+    <insert id="saveScore">
         insert into score(user_id, match_id, contestant_id, score, create_by)
-        VALUES (#{userId}, #{matchId}, #{conteatantId}, #{score}, #{createBy});
+         values (#{userId}, #{matchId}, #{contestantId}, #{score}, #{createBy});
     </insert>
 
     <!-- 开启打分通道 -->
