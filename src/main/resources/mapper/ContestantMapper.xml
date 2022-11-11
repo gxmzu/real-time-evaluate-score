@@ -45,4 +45,36 @@
     </select>
 
 
+    <select id="selectContestantListByMatchId" parameterType="Contestant" resultMap="ContestantResult">
+        <include refid="selectContestantVo"/>
+        <where>
+            <if test="matchId!=null and matchId!=''">
+                `match_id` = #{matchId}
+            </if>
+        </where>
+    </select>
+
+    <update id="batchUpdateContestant" parameterType="List">
+        <!--        这个方法太慢了-->
+<!--        <foreach collection="list" item="item" index="index" separator=";">-->
+<!--            update contestant set match_order=#{item.matchOrder}-->
+<!--            where contestant_id = #{item.contestantId}-->
+<!--        </foreach>-->
+
+        <!--比上一种方法快了一倍，但仅支持单个字段的更新-->
+        update contestant
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="match_order =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when contestant_id=#{item.contestantId} then #{item.matchOrder}
+                </foreach>
+            </trim>
+        </trim>
+        where contestant_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.contestantId,jdbcType=BIGINT}
+        </foreach>
+
+    </update>
+
 </mapper>

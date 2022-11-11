@@ -19,4 +19,19 @@ public interface ContestantMapper {
      * @return 参赛者列表
      */
     public List<Contestant> selectContestantList(Contestant contestant);
+
+
+    /**
+     * 获取指定比赛的所有参赛者
+     * @param contestant 比赛id
+     * @return 参赛者列表
+     */
+    public List<Contestant> selectContestantListByMatchId(Contestant contestant);
+
+    /**
+     * 批量更新参赛者
+     * @param contestantList 参赛者列表
+     * @return 更新结果
+     */
+    public int batchUpdateContestant(List<Contestant> contestantList);
 }

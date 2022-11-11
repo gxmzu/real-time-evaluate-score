@@ -15,7 +15,7 @@ public class BaseEntity extends PageDomain implements Serializable {
     private String token;
 
     /**
-     * 过期时间
+     * 登录时间
      */
     private Long loginTime;
 

@@ -18,4 +18,12 @@ public interface ContestantService {
      * @return 参赛者列表
      */
     public List<Contestant> getContestantList(Contestant contestant);
+
+
+    /**
+     * 随机排序参赛者的比赛顺序
+     * @param matchId 比赛id
+     * @return 操作结果 1代表排序成功，0代表排序失败
+     */
+    public List<Contestant> orderContestant(Long matchId);
 }

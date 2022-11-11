@@ -3,9 +3,11 @@ package com.gxmzu.score.service.impl;
 import com.gxmzu.score.domain.entity.Contestant;
 import com.gxmzu.score.mapper.ContestantMapper;
 import com.gxmzu.score.service.ContestantService;
+import com.gxmzu.score.utils.RedisCache;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,8 +21,27 @@ public class ContestantServiceImpl implements ContestantService {
     @Resource
     private ContestantMapper contestantMapper;
 
+    @Resource
+    private RedisCache redisCache;
+
     @Override
     public List<Contestant> getContestantList(Contestant contestant) {
         return contestantMapper.selectContestantList(contestant);
+    }
+
+    @Override
+    public List<Contestant> orderContestant(Long matchId) {
+        Contestant contestant = new Contestant();
+        contestant.setMatchId(matchId);
+        List<Contestant> contestantList = contestantMapper.selectContestantListByMatchId(contestant);
+        Collections.shuffle(contestantList);
+        for (int i = 0; i < contestantList.size(); i++) {
+            Contestant c = contestantList.get(i);
+            c.setMatchOrder(i + 1);
+            contestantList.set(i, c);
+        }
+        redisCache.setCacheObject("match:" + matchId + ":isScoring", contestantList.get(0));
+        contestantMapper.batchUpdateContestant(contestantList);
+        return contestantList;
     }
 }
