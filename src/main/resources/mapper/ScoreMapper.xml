@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxmzu.score.mapper.ScoreMapper">
+
+    <!-- 保存评委打分 -->
+    <insert id="saveScore" parameterType="Score">
+        insert into score(user_id, match_id, contestant_id, score, create_by)
+        VALUES (#{userId}, #{matchId}, #{conteatantId}, #{score}, #{createBy});
+    </insert>
+
+    <!-- 开启打分通道 -->
+    <update id="openChannel">
+        update contestant set is_open = 1 where match_id = #{arg0} and contestant_id = #{arg1};
+    </update>
+
+</mapper>

@@ -15,6 +15,11 @@ import java.util.Date;
 public class Score extends BaseEntity implements Serializable {
 
     /**
+     * 比赛id
+     */
+    private long matchId;
+
+    /**
      * 参赛者id
      */
     private long contestantId;
@@ -52,6 +57,14 @@ public class Score extends BaseEntity implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
+
+    public long getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(long matchId) {
+        this.matchId = matchId;
+    }
 
     public long getContestantId() {
         return contestantId;
