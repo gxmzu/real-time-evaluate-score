@@ -9,14 +9,17 @@ import com.gxmzu.score.domain.entity.Contestant;
 import com.gxmzu.score.domain.entity.Match;
 import com.gxmzu.score.domain.entity.Score;
 import com.gxmzu.score.domain.entity.User;
+import com.gxmzu.score.mapper.ContestantMapper;
 import com.gxmzu.score.mapper.ScoreMapper;
 import com.gxmzu.score.service.ScoreService;
 import com.gxmzu.score.service.TokenService;
 import com.gxmzu.score.utils.CalculateScoreUtils;
 import com.gxmzu.score.utils.HttpStatus;
 import com.gxmzu.score.utils.RedisCache;
+import com.gxmzu.score.utils.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +44,9 @@ public class ScoreServiceImpl implements ScoreService {
     ScoreMapper scoreMapper;
 
     @Resource
+    ContestantMapper contestantMapper;
+
+    @Resource
     TokenService tokenService;
 
 
@@ -48,12 +54,13 @@ public class ScoreServiceImpl implements ScoreService {
     private final static ExecutorService CREATE_REBUILD_EXECUTOR = Executors.newFixedThreadPool(10);
 
     /**
+     * 评委评分
      * 以json格式存储评分信息到缓存，每提交一次信息则从缓存取出内容转为list将新提交的内容
      * 转换为json后替换掉redis中原有内容。并开启新的线程将新的分数写入数据库.
      *
-     * @param httpServletRequest
-     * @param score
-     * @return
+     * @param httpServletRequest 请求头
+     * @param score 分数
+     * @return 返回前端信息
      */
     @Override
     public AjaxResult scoreTheContestants(HttpServletRequest httpServletRequest, Score score) {
@@ -63,6 +70,14 @@ public class ScoreServiceImpl implements ScoreService {
         if (user.getUserType().equals("0") || user.getUserType().equals("1")
                 || user.getUserType().equals("2")) {
             return AjaxResult.error(HttpStatus.UNAUTHORIZED, "未授权此功能");
+        }
+
+        //查询当前队伍是否开启打分通道
+        String contestantJson = stringRedisTemplate.opsForValue().get("match:" + score.getMatchId() + ":isScoring");
+        Contestant contestant = JSONUtil.toBean(contestantJson, Contestant.class);
+        if (contestant == null || score.getContestantId() != contestant.getContestantId()
+                || contestant.getIsOpen().equals("1")) {
+            return AjaxResult.error(HttpStatus.ERROR, "当前队伍未开启打分");
         }
 
         //获取比赛信息
@@ -84,18 +99,15 @@ public class ScoreServiceImpl implements ScoreService {
 
         score.setProgress(scores.size() + "/" + match.getUserList().length);
 
-        //score.setProgress((scores.size() + 1) + "/" +6);
         score.setCreateBy(user.getUserName());
 
-        //在list中追加新的评分记录
+        //遍历list是否有重复打分情况存在，若没有则在list中追加新的评分记录
         for (Score obj : scores) {
             if (obj.getMatchId().equals(score.getMatchId()) && obj.getContestantId().equals(score.getContestantId())
                     && obj.getUserId().equals(score.getUserId())) {
                 return AjaxResult.error(HttpStatus.ERROR_QUERY, "重复打分");
             }
         }
-
-        //添加到列表
         scores.add(score);
 
         //将list转为json重新存入redis覆盖掉原有记录
@@ -116,11 +128,12 @@ public class ScoreServiceImpl implements ScoreService {
 
 
     /**
+     * 开启打分通道
      * 从redis中查询当前缓存中的队伍，将状态置为1，并改变数据库中的相应内容
      *
-     * @param matchId
-     * @param contestantId
-     * @return
+     * @param matchId 比赛id
+     * @param contestantId 参赛者id
+     * @return 请求信息
      */
     @Override
     public AjaxResult openChannel(HttpServletRequest httpServletRequest, Long matchId, Long contestantId) {
@@ -153,11 +166,13 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     /**
+     * 关闭打分通道
      * 1. 从redis中获取正在被打分的队伍，将is_open字段置为0，并按评分规则计算分数写入数据库
-     * 2. 查询(当前队伍比赛顺序+1)，将查询到替换掉redis中存放的当前队伍
-     * @param matchId
-     * @param contestantId
-     * @return
+     * 2. 查询(当前队伍比赛顺序 + 1)，将查询到替换掉redis中存放的当前队伍
+     *
+     * @param matchId 比赛id
+     * @param contestantId 参赛者id
+     * @return 请求信息
      */
     @Override
     public AjaxResult closeChannel(HttpServletRequest httpServletRequest, Long matchId, Long contestantId) {
@@ -172,6 +187,7 @@ public class ScoreServiceImpl implements ScoreService {
         String entityJson = stringRedisTemplate.opsForValue().get("match:" + matchId + ":isScoring");
         Contestant contestant = JSONUtil.toBean(entityJson, Contestant.class);
 
+        //判空
         if (contestant == null) {
             AjaxResult.error(HttpStatus.ERROR, "队伍不存在");
         }
@@ -201,22 +217,31 @@ public class ScoreServiceImpl implements ScoreService {
 
         //获取下一队参赛队伍的信息
         Long order = contestant.getMatchOrder() + 1;
+        Contestant nextContestant = contestantMapper.select(order);
+
+        //判空
+        if (nextContestant == null){
+            return AjaxResult.error(HttpStatus.ERROR, "未找到下一位参赛者信息");
+        }
 
         //将获取到的队伍存入redis中
+        String nextJson = JSONUtil.toJsonStr(nextContestant);
+        stringRedisTemplate.opsForValue().set("match:" + matchId + ":isScoring", nextJson);
 
-        //将修改后的队伍信息写入数据库以及redis中
+        //将修改后的队伍信息写入数据库以及redis排行中
         CREATE_REBUILD_EXECUTOR.submit(()->{
             //获取redis排行榜
             String rankJson = stringRedisTemplate.opsForValue().get("match:" + matchId + ":rank");
             JSONArray objects1 = JSONUtil.parseArray(rankJson);
             List<Contestant> rank = objects1.toList(Contestant.class);
 
-            //添加记录
-            //rank.add();
+            //在redis排行中添加记录
+            rank.add(contestant);
             String tempJson = JSONUtil.toJsonStr(rank);
             stringRedisTemplate.opsForValue().set("match:" + matchId + ":rank", tempJson);
 
-            //添加到数据库
+            //修改到数据库
+            contestantMapper.updateContestant(contestant);
 
         });
 
