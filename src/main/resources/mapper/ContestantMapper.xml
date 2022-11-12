@@ -91,12 +91,13 @@
     <delete id="deleteContestant">
         delete from contestant where contestant_id = #{contestantId}
     </delete>
-    <select id="select" resultType="com.gxmzu.score.domain.AjaxResult">
+    <select id="select" resultType="com.gxmzu.score.domain.entity.Contestant">
         select * from contestant where match_order = #{matchOrder}
     </select>
 
     <select id="count" resultType="int">
-        select count(contestant_id) from contestant
+        select contestant_id,match_id,match_order,is_open,name,info,score,
+         rank, create_time, create_by, update_time, update_by from contestant where match_order = #{matchOrder}
     </select>
 
 </mapper>

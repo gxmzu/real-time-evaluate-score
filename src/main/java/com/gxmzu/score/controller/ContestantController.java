@@ -103,14 +103,5 @@ public class ContestantController extends BaseController {
         }
     }
 
-    /**
-     * 根据传入的参赛顺序，返回对应的参赛队伍
-     */
-    @PostMapping("/order/{match_order}")
-    public AjaxResult getContestant(@PathVariable Long match_order){
-        if (contestantService.select(match_order) == null){
-            return AjaxResult.error(HttpStatus.ERROR,"未查到此队伍");
-        }
-        return contestantService.select(match_order);
-    }
+
 }
