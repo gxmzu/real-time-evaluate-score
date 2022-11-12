@@ -1,5 +1,6 @@
 package com.gxmzu.score.service;
 
+import com.gxmzu.score.domain.AjaxResult;
 import com.gxmzu.score.domain.entity.Contestant;
 
 import java.util.List;
@@ -26,4 +27,19 @@ public interface ContestantService {
      * @return 操作结果 1代表排序成功，0代表排序失败
      */
     public List<Contestant> orderContestant(Long matchId);
+
+    /**
+     * 增加参赛者
+     */
+    int addContestant(Contestant contestant);
+    /**
+     * 删除参赛者
+     */
+    int deleteContestant(Long id);
+    /**
+     * 修改参赛者
+     */
+    int updateContestant(Contestant contestant);
+
+    AjaxResult select(Long match_order);
 }
