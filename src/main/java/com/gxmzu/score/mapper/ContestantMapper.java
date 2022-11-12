@@ -52,5 +52,5 @@ public interface ContestantMapper {
     /**
      * 根据传过来的参赛顺序，返回对应的队伍
      */
-    AjaxResult select(Long match_order);
+    Contestant select(Long match_order);
 }

@@ -76,12 +76,5 @@ public class ContestantServiceImpl implements ContestantService {
         return item;
     }
 
-    @Override
-    public AjaxResult select(Long match_order) {
-        if (contestantMapper.select(match_order) == null) {
-            return AjaxResult.error(HttpStatus.ERROR,"未查到此队伍");
-        }else {
-            return AjaxResult.success("成功", contestantMapper.select(match_order));
-        }
-    }
+
 }

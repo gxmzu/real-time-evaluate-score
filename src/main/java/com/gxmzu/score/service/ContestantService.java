@@ -41,5 +41,5 @@ public interface ContestantService {
      */
     int updateContestant(Contestant contestant);
 
-    AjaxResult select(Long match_order);
+
 }
