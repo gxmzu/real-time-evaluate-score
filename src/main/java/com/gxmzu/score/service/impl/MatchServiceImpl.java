@@ -112,5 +112,6 @@ public class MatchServiceImpl implements MatchService {
         });
 
         return AjaxResult.success("删除成功");
+
     }
 }
