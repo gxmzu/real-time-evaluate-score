@@ -77,4 +77,26 @@
 
     </update>
 
+    <insert id="addContestant">
+        insert into contestant
+        values(#{contestantId},#{matchId},#{matchOrder},#{isOpen},#{name},#{info},#{score},#{rank},#{createTime},#{createBy},#{updateTime},#{updateBy})
+    </insert>
+
+    <update id="updateContestant">
+        update contestant set name = #{name},info = #{info}, match_order = #{matchOrder}, is_open = #{isOpen},
+         score = #{score}
+         where contestant_id = #{contestantId}
+    </update>
+
+    <delete id="deleteContestant">
+        delete from contestant where contestant_id = #{contestantId}
+    </delete>
+    <select id="select" resultType="com.gxmzu.score.domain.AjaxResult">
+        select * from contestant where match_order = #{matchOrder}
+    </select>
+
+    <select id="count" resultType="int">
+        select count(contestant_id) from contestant
+    </select>
+
 </mapper>

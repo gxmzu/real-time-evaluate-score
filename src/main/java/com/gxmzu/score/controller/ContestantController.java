@@ -62,4 +62,55 @@ public class ContestantController extends BaseController {
         }
         return AjaxResult.success();
     }
+
+    /**
+     * 删除参赛者
+     */
+    @DeleteMapping("/contestant/{id}")
+    public AjaxResult deleteContestant(@PathVariable Long id){
+        int result = contestantService.deleteContestant(id);
+        if (result <= 0){
+            return AjaxResult.error(HttpStatus.ERROR,"删除失败");
+        }else {
+            return AjaxResult.success("删除成功");
+        }
+    }
+    /**
+     * 添加参赛者
+     * */
+    @PostMapping("/add")
+    public AjaxResult addContestant(@RequestBody Contestant contestant){
+        int result = contestantService.addContestant(contestant);//影响行数
+        if (result <= 0){
+            return AjaxResult.error(HttpStatus.ERROR,"添加失败");
+        }else {
+            return AjaxResult.success("添加成功");
+        }
+    }
+    /**
+     * 修改参赛者
+     * */
+    @PutMapping("/update")
+    public AjaxResult updateContestant(@RequestBody Contestant contestant){
+        int result = contestantService.updateContestant(contestant);//影响行数
+        if (result == -1){
+            return AjaxResult.error(HttpStatus.LACK_QUERY,"缺少请求参数");
+        }else if(result == -2) {
+            return AjaxResult.error(HttpStatus.LACK_QUERY,"请求参数错误");
+        }
+        else {
+            return AjaxResult.success("修改成功");
+        }
+    }
+
+    /**
+     * 根据传入的参赛顺序，返回对应的参赛队伍
+     */
+    @PostMapping("/order/{match_order}")
+    public AjaxResult getContestant(@PathVariable Long match_order){
+        if (contestantService.select(match_order) == null){
+            return AjaxResult.error(HttpStatus.ERROR,"未查到此队伍");
+        }
+        return contestantService.select(match_order);
+    }
 }
