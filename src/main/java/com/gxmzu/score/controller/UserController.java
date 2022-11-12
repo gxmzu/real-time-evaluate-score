@@ -7,9 +7,11 @@ import com.gxmzu.score.service.UserService;
 import com.gxmzu.score.utils.HttpStatus;
 import com.gxmzu.score.utils.RedisCache;
 import com.gxmzu.score.utils.StringUtils;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -48,4 +50,28 @@ public class UserController extends BaseController {
         return getDataTable(list);
     }
 
+    /**
+     *
+     * @param number 生成随机用户
+     * @return 用户列表
+     */
+    @GetMapping("/generate")
+    public AjaxResult randomGenerateUser(HttpServletRequest httpServletRequest,int number){
+        return userService.randomGenerateUser(httpServletRequest,number);
+    }
+
+    @PutMapping("/update")
+    public AjaxResult updateUser(HttpServletRequest httpServletRequest,User user){
+        return userService.updateUser(httpServletRequest,user);
+    }
+
+    @PostMapping("/reset")
+    public AjaxResult resetPassword(HttpServletRequest httpServletRequest,User user){
+        return userService.resetPassword(httpServletRequest,user);
+    }
+
+    @DeleteMapping("/{userId}")
+    public AjaxResult deleteUser(HttpServletRequest httpServletRequest, @PathVariable Long userId){
+        return userService.deleteUser(httpServletRequest,userId);
+    }
 }
