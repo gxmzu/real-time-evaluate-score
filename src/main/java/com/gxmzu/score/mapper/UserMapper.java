@@ -29,7 +29,7 @@ public interface UserMapper {
      * 重置密码
      * @return 重置结果
      */
-    public int resetPassword();
+    public int resetPassword(User user);
 
     /**
      * 删除用户
@@ -51,4 +51,11 @@ public interface UserMapper {
      * @return 修改结果
      */
     public int updateUser(User user);
+
+    /**
+     * 保存用户
+     * @param user
+     * @return 保存结果
+     */
+    public int addUser(User user);
 }

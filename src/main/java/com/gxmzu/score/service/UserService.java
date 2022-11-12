@@ -3,6 +3,7 @@ package com.gxmzu.score.service;
 import com.gxmzu.score.domain.AjaxResult;
 import com.gxmzu.score.domain.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public interface UserService {
      *
      * @return 重置结果
      */
-    public int resetPassword();
+    public AjaxResult resetPassword(HttpServletRequest httpServletRequest,User user);
 
     /**
      * 删除用户
@@ -49,7 +50,7 @@ public interface UserService {
      * @param userId 用户id
      * @return 删除结果
      */
-    public int deleteUser(Long userId);
+    public AjaxResult deleteUser(HttpServletRequest httpServletRequest,Long userId);
 
     /**
      * 随机生成用户
@@ -57,7 +58,7 @@ public interface UserService {
      * @param number 生成用户数量，范围在1~200之间
      * @return 生成结果
      */
-    public List<User> randomGenerateUser(int number);
+    public AjaxResult randomGenerateUser(HttpServletRequest httpServletRequest,int number);
 
     /**
      * 修改用户
@@ -65,6 +66,13 @@ public interface UserService {
      * @param user 修改后的用户信息
      * @return 修改结果
      */
-    public int updateUser(User user);
+    public AjaxResult updateUser(HttpServletRequest httpServletRequest,User user);
 
+    /**
+     * 添加用户
+     *
+     * @param user 添加用户信息
+     * @return 修改结果
+     */
+    public int addUser(User user);
 }

@@ -20,18 +20,39 @@
 
     <sql id="selectUserVo">
         select u.user_id, u.user_name, u.user_pwd, u.user_type, u.start_time, u.end_time,
-        u.nick_name, u.create_by, u.create_time, u.update_by, u.update_time
+               u.nick_name, u.create_by, u.create_time, u.update_by, u.update_time
         from user u
     </sql>
+    <update id="updateUser">
+        update user
+        set nick_name = #{nickName}
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
+    <update id="resetPassword" parameterType="User">
+        update user
+        set user_pwd = #{userPwd}
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
+    <delete id="deleteUser" parameterType="long">
+        delete
+        from user
+        <where>
+            user_id =#{userId}
+        </where>
+    </delete>
 
     <select id="selectUserList" parameterType="User" resultMap="UserResult">
         <include refid="selectUserVo"/>
         <where>
             <if test="userName!=null and userName!=''">
-                u.user_name = #{userName}
+                u.user_name = #{userName} and
             </if>
+            u.user_type != '0'
         </where>
-
     </select>
 
     <select id="selectUserByUserName" parameterType="User" resultMap="UserResult">
@@ -43,5 +64,8 @@
         </where>
     </select>
 
-
+    <insert id="addUser" parameterType="User" >
+        insert into user (user_name,user_pwd,user_type,create_by)
+        values (#{userName},#{userPwd},#{userType},#{createBy})
+    </insert>
 </mapper>
