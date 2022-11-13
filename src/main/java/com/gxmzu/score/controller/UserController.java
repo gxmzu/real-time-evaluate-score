@@ -3,11 +3,13 @@ package com.gxmzu.score.controller;
 import com.gxmzu.score.domain.AjaxResult;
 import com.gxmzu.score.domain.entity.User;
 import com.gxmzu.score.domain.model.LoginBody;
+import com.gxmzu.score.exception.AccessDeniedException;
+import com.gxmzu.score.service.TokenService;
 import com.gxmzu.score.service.UserService;
+import com.gxmzu.score.utils.Constants;
 import com.gxmzu.score.utils.HttpStatus;
 import com.gxmzu.score.utils.RedisCache;
 import com.gxmzu.score.utils.StringUtils;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,6 +31,9 @@ public class UserController extends BaseController {
     @Resource
     private RedisCache redisCache;
 
+    @Resource
+    private TokenService tokenService;
+
     @PostMapping("/login")
     public AjaxResult login(@RequestBody LoginBody loginBody) {
         if (StringUtils.isEmpty(loginBody.getUserName()) || StringUtils.isEmpty(loginBody.getUserPwd())) {
@@ -44,34 +49,59 @@ public class UserController extends BaseController {
      * @return 用户列表
      */
     @GetMapping("/list")
-    public AjaxResult getUserList(User user) {
+    public AjaxResult getUserList(HttpServletRequest request, User user) {
+        User u = tokenService.getUser(request);
+        if (Constants.ADMIN.equals(u.getUserType())) {
+            user.setUserType(Constants.ADMIN);
+        } else if (Constants.PRINCIPAL.equals(u.getUserType())) {
+            user.setUserType(Constants.PRINCIPAL);
+        } else {
+            throw new AccessDeniedException("未授权");
+        }
         startPage(user);
         List<User> list = userService.getUserList(user);
         return getDataTable(list);
     }
 
     /**
-     *
      * @param number 生成随机用户
      * @return 用户列表
      */
     @GetMapping("/generate")
-    public AjaxResult randomGenerateUser(HttpServletRequest httpServletRequest,int number){
-        return userService.randomGenerateUser(httpServletRequest,number);
+    public AjaxResult randomGenerateUser(HttpServletRequest httpServletRequest, int number) {
+        return userService.randomGenerateUser(httpServletRequest, number);
     }
 
+    /**
+     * 更新用户信息
+     * @param httpServletRequest 请求
+     * @param user 用户信息
+     * @return 更新结果
+     */
     @PutMapping("/update")
-    public AjaxResult updateUser(HttpServletRequest httpServletRequest,User user){
-        return userService.updateUser(httpServletRequest,user);
+    public AjaxResult updateUser(HttpServletRequest httpServletRequest, User user) {
+        return userService.updateUser(httpServletRequest, user);
     }
 
+    /**
+     * 重置用户密码
+     * @param httpServletRequest 请求
+     * @param user 用户信息
+     * @return 重置结果
+     */
     @PostMapping("/reset")
-    public AjaxResult resetPassword(HttpServletRequest httpServletRequest,User user){
-        return userService.resetPassword(httpServletRequest,user);
+    public AjaxResult resetPassword(HttpServletRequest httpServletRequest, User user) {
+        return userService.resetPassword(httpServletRequest, user);
     }
 
+    /**
+     * 删除用户
+     * @param httpServletRequest 请求
+     * @param userId 用户信息id
+     * @return 删除结果
+     */
     @DeleteMapping("/{userId}")
-    public AjaxResult deleteUser(HttpServletRequest httpServletRequest, @PathVariable Long userId){
-        return userService.deleteUser(httpServletRequest,userId);
+    public AjaxResult deleteUser(HttpServletRequest httpServletRequest, @PathVariable Long userId) {
+        return userService.deleteUser(httpServletRequest, userId);
     }
 }

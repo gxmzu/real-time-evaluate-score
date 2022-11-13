@@ -1,5 +1,8 @@
 package com.gxmzu.score.utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @Author: https://github.com/gxmzu
  * @Date: 2022/11/10/0:03
@@ -42,4 +45,9 @@ public class Constants {
      * 评委
      */
     public static final String JUDGE = "3";
+
+    /**
+     * 角色组
+     */
+    public static final List<String> ROLES = Arrays.asList("0", "1", "2", "3");
 }

@@ -51,6 +51,12 @@
             <if test="userName!=null and userName!=''">
                 u.user_name = #{userName} and
             </if>
+            <if test="userType!=null and userType!=''">
+                u.user_type = #{userType} and
+            </if>
+            <if test="nickName!=null and nickName!=''">
+                u.nick_name like concat('%', #{nickName}, '%') and
+            </if>
             u.user_type != '0'
         </where>
     </select>
