@@ -104,7 +104,14 @@ pagehelper:
 
 logging:
   level:
-    com.gxmzu.mapper: debug
+    com.gxmzu.score.mapper: debug
+
+# 系统配置
+config:
+  user:
+    maxGenerateNumber: 200 #最大生成用户数量
+    adminUserId: 1         #管理员id
+    maxUserNameLength: 6   #用户名最大长度
 
 
 

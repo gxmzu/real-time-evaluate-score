@@ -41,5 +41,19 @@
         </where>
     </select>
 
+    <insert  id="addMatch" parameterType="Match" useGeneratedKeys="true" keyProperty="matchId" >
+        insert into `match` (match_name,info,max_score,score_rule_name,create_by)
+        values (#{matchName},#{info},#{maxScore},#{scoreRuleName},#{createBy})
+    </insert>
+
+    <update id="updateMatch" parameterType="Match">
+        update `match` set  match_name = #{matchName}, info = #{info}, max_score = #{maxScore}, score_rule_name = #{scoreRuleName}, update_by = #{updateBy}
+        where match_id = #{matchId}
+    </update>
+
+    <delete id="deleteMatch">
+        delete from `match` where match_id = #{matchId}
+    </delete>
+
 
 </mapper>
