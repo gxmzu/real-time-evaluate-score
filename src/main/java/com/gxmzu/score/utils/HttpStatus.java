@@ -20,7 +20,7 @@ public class HttpStatus {
     /**
      * 未认证
      */
-    public static final int UNAUTHENTICATION = 510;
+    public static final int UNAUTHENTICATED = 510;
 
     /**
      * 未授权
@@ -31,6 +31,11 @@ public class HttpStatus {
      * 缺少请求参数
      */
     public static final int LACK_QUERY = 520;
+
+    /**
+     * 不支持的请求方式
+     */
+    public static final int NO_SUPPORT_REQUEST_METHOD = 521;
 
     /**
      * 错误的请求参数

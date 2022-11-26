@@ -1,11 +1,8 @@
 package com.gxmzu.score.interceptor;
 
-import com.alibaba.fastjson.JSON;
-import com.gxmzu.score.domain.AjaxResult;
 import com.gxmzu.score.domain.entity.User;
 import com.gxmzu.score.exception.AccessDeniedException;
 import com.gxmzu.score.service.TokenService;
-import com.gxmzu.score.utils.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
