@@ -17,16 +17,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SpringMvcConfig implements WebMvcConfigurer {
 
     @Bean
-    public HandlerInterceptor getGlobalInterceptor(){
+    public HandlerInterceptor getGlobalInterceptor() {
         return new GlobalInterceptor();
     }
 
+    /**
+     * 添加匿名访问
+     * @param registry 注册器
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration registration = registry.addInterceptor(getGlobalInterceptor());
         registration.addPathPatterns("/**");
         registration.excludePathPatterns(
                 "/user/login",
+                "/score/list",
                 "/**/*.html",
                 "/**/*.js",
                 "/**/*.css"
