@@ -7,8 +7,15 @@ package com.gxmzu.score.domain.model;
  */
 public class LoginBody {
 
+    /**
+     * 用户名
+     */
     private String userName;
-    private String userPwd;
+
+    /**
+     * 密码
+     */
+    private String password;
 
     public String getUserName() {
         return userName;
@@ -18,11 +25,11 @@ public class LoginBody {
         this.userName = userName;
     }
 
-    public String getUserPwd() {
-        return userPwd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPwd(String userPwd) {
-        this.userPwd = userPwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

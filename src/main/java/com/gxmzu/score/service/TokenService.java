@@ -113,6 +113,22 @@ public class TokenService {
     }
 
     /**
+     * 从令牌中获取用户身份信息
+     *
+     * @param token 令牌
+     * @return 用户信息
+     */
+    public User getUser(String token) {
+        if (StringUtils.isNotEmpty(token)) {
+            Claims claims = parseToken(token);
+            String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
+            String userKey = Constants.LOGIN_TOKEN_KEY + uuid;
+            return redisCache.getCacheObject(userKey);
+        }
+        return null;
+    }
+
+    /**
      * 刷新令牌有效期
      *
      * @param user 登录信息

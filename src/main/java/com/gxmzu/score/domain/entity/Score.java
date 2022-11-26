@@ -30,9 +30,14 @@ public class Score extends BaseEntity implements Serializable {
     private Long userId;
 
     /**
+     * 回合
+     */
+    private int turn;
+
+    /**
      * 得分
      */
-    private double score;
+    private Double score;
 
     /**
      * 进度
@@ -48,7 +53,7 @@ public class Score extends BaseEntity implements Serializable {
      * 创建时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -60,14 +65,14 @@ public class Score extends BaseEntity implements Serializable {
      * 更新时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     public Long getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(long matchId) {
+    public void setMatchId(Long matchId) {
         this.matchId = matchId;
     }
 
@@ -75,7 +80,7 @@ public class Score extends BaseEntity implements Serializable {
         return contestantId;
     }
 
-    public void setContestantId(long contestantId) {
+    public void setContestantId(Long contestantId) {
         this.contestantId = contestantId;
     }
 
@@ -83,24 +88,24 @@ public class Score extends BaseEntity implements Serializable {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public double getScore() {
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(Double score) {
         this.score = score;
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
     }
 
     public String getProgress() {
@@ -109,6 +114,14 @@ public class Score extends BaseEntity implements Serializable {
 
     public void setProgress(String progress) {
         this.progress = progress;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
     public Date getCreateTime() {
@@ -138,9 +151,12 @@ public class Score extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "Score{" +
-                "contestantId=" + contestantId +
+                "matchId=" + matchId +
+                ", contestantId=" + contestantId +
                 ", userId=" + userId +
+                ", turn=" + turn +
                 ", score=" + score +
+                ", progress='" + progress + '\'' +
                 ", createBy='" + createBy + '\'' +
                 ", createTime=" + createTime +
                 ", updateBy='" + updateBy + '\'' +

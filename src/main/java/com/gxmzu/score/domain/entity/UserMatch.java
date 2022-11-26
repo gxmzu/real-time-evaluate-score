@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * @Author: https://github.com/gxmzu
  * @Date: 2022/11/09/15:16
- * @Description: 用户比赛类
+ * @Description: 用户比赛实体
  */
 public class UserMatch extends BaseEntity implements Serializable {
 

@@ -17,7 +17,7 @@ public class User extends BaseEntity implements Serializable {
     /**
      * 用户id
      */
-    private long userId;
+    private Long userId;
 
     /**
      * 用户名
@@ -27,7 +27,7 @@ public class User extends BaseEntity implements Serializable {
     /**
      * 密码
      */
-    private String userPwd;
+    private String password;
 
     /**
      * 用户类型，'0'为超级管理员，'1'为活动负责人，'2'为主评委，'3'为评委
@@ -40,20 +40,6 @@ public class User extends BaseEntity implements Serializable {
     private String nickName;
 
     /**
-     * 活动开始时间，活动负责人负责的活动开始时间
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date startTime;
-
-    /**
-     * 活动结束时间，活动负责人负责的活动结束时间
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date endTime;
-
-    /**
      * 创建人
      */
     private String createBy;
@@ -62,7 +48,7 @@ public class User extends BaseEntity implements Serializable {
      * 创建时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -74,14 +60,14 @@ public class User extends BaseEntity implements Serializable {
      * 更新时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -93,12 +79,12 @@ public class User extends BaseEntity implements Serializable {
         this.userName = userName;
     }
 
-    public String getUserPwd() {
-        return userPwd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPwd(String userPwd) {
-        this.userPwd = userPwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUserType() {
@@ -115,22 +101,6 @@ public class User extends BaseEntity implements Serializable {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     public String getCreateBy() {
@@ -170,15 +140,13 @@ public class User extends BaseEntity implements Serializable {
         return "User{" +
                 "userId=" + userId +
                 ", userName='" + userName + '\'' +
-                ", userPwd='" + userPwd + '\'' +
+                ", password='" + password + '\'' +
                 ", userType='" + userType + '\'' +
                 ", nickName='" + nickName + '\'' +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
                 ", createBy='" + createBy + '\'' +
-                ", createTime='" + createTime + '\'' +
+                ", createTime=" + createTime +
                 ", updateBy='" + updateBy + '\'' +
-                ", updateTime='" + updateTime + '\'' +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }

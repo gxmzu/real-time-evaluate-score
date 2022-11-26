@@ -4,6 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxmzu.score.mapper.ContestantMapper">
 
+    <cache eviction="FIFO" flushInterval="60000" readOnly="false" size="1024"/>
+
     <resultMap type="Contestant" id="ContestantResult">
         <id property="contestantId" column="contestant_id"/>
         <result property="matchId" column="match_id"/>
@@ -33,71 +35,6 @@
             </if>
         </where>
 
-    </select>
-
-    <select id="selectContestantByName" parameterType="Contestant" resultMap="ContestantResult">
-        <include refid="selectContestantVo"/>
-        <where>
-            <if test="name!=null and name!=''">
-                `name` = #{name}
-            </if>
-        </where>
-    </select>
-
-
-    <select id="selectContestantListByMatchId" parameterType="Contestant" resultMap="ContestantResult">
-        <include refid="selectContestantVo"/>
-        <where>
-            <if test="matchId!=null and matchId!=''">
-                `match_id` = #{matchId}
-            </if>
-        </where>
-    </select>
-
-    <update id="batchUpdateContestant" parameterType="List">
-        <!--        这个方法太慢了-->
-<!--        <foreach collection="list" item="item" index="index" separator=";">-->
-<!--            update contestant set match_order=#{item.matchOrder}-->
-<!--            where contestant_id = #{item.contestantId}-->
-<!--        </foreach>-->
-
-        <!--比上一种方法快了一倍，但仅支持单个字段的更新-->
-        update contestant
-        <trim prefix="set" suffixOverrides=",">
-            <trim prefix="match_order =case" suffix="end,">
-                <foreach collection="list" item="item" index="index">
-                    when contestant_id=#{item.contestantId} then #{item.matchOrder}
-                </foreach>
-            </trim>
-        </trim>
-        where contestant_id in
-        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
-            #{item.contestantId,jdbcType=BIGINT}
-        </foreach>
-
-    </update>
-
-    <insert id="addContestant">
-        insert into contestant
-        values(#{contestantId},#{matchId},#{matchOrder},#{isOpen},#{name},#{info},#{score},#{rank},#{createTime},#{createBy},#{updateTime},#{updateBy})
-    </insert>
-
-    <update id="updateContestant">
-        update contestant set name = #{name},info = #{info}, match_order = #{matchOrder}, is_open = #{isOpen},
-         score = #{score}
-         where contestant_id = #{contestantId}
-    </update>
-
-    <delete id="deleteContestant">
-        delete from contestant where contestant_id = #{contestantId}
-    </delete>
-    <select id="select" resultType="com.gxmzu.score.domain.entity.Contestant">
-        select * from contestant where match_order = #{matchOrder}
-    </select>
-
-    <select id="count" resultType="int">
-        select contestant_id,match_id,match_order,is_open,name,info,score,
-         rank, create_time, create_by, update_time, update_by from contestant where match_order = #{matchOrder}
     </select>
 
 </mapper>

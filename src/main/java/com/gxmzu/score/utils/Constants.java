@@ -21,6 +21,11 @@ public class Constants {
     public static final String TOKEN_PREFIX = "Bearer ";
 
     /**
+     * cookie前缀
+     */
+    public static final String COOKIE_PREFIX = "Authorization";
+
+    /**
      * 登录用户 redis key
      */
     public static final String LOGIN_TOKEN_KEY = "login_tokens:";

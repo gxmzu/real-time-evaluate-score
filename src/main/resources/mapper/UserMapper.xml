@@ -4,13 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxmzu.score.mapper.UserMapper">
 
+    <cache eviction="FIFO" flushInterval="60000" readOnly="false" size="1024"/>
+
     <resultMap type="User" id="UserResult">
         <id property="userId" column="user_id"/>
-        <result property="userName" column="user_name"/>
-        <result property="userPwd" column="user_pwd"/>
+        <result property="userName" column="username"/>
+        <result property="password" column="password"/>
         <result property="userType" column="user_type"/>
-        <result property="startTime" column="start_time"/>
-        <result property="endTime" column="end_time"/>
         <result property="nickName" column="nick_name"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -19,37 +19,17 @@
     </resultMap>
 
     <sql id="selectUserVo">
-        select u.user_id, u.user_name, u.user_pwd, u.user_type, u.start_time, u.end_time,
-               u.nick_name, u.create_by, u.create_time, u.update_by, u.update_time
+        select u.user_id, u.username, u.password, u.user_type, u.nick_name,
+        u.create_by, u.create_time, u.update_by, u.update_time
         from user u
     </sql>
-    <update id="updateUser">
-        update user
-        set nick_name = #{nickName}
-        <where>
-            user_id = #{userId}
-        </where>
-    </update>
-    <update id="resetPassword" parameterType="User">
-        update user
-        set user_pwd = #{userPwd}
-        <where>
-            user_id = #{userId}
-        </where>
-    </update>
-    <delete id="deleteUser" parameterType="long">
-        delete
-        from user
-        <where>
-            user_id =#{userId}
-        </where>
-    </delete>
+
 
     <select id="selectUserList" parameterType="User" resultMap="UserResult">
         <include refid="selectUserVo"/>
         <where>
             <if test="userName!=null and userName!=''">
-                u.user_name = #{userName} and
+                u.username = #{userName} and
             </if>
             <if test="userType!=null and userType!=''">
                 u.user_type = #{userType} and
@@ -65,13 +45,9 @@
         <include refid="selectUserVo"/>
         <where>
             <if test="userName!=null and userName!=''">
-                u.user_name = #{userName}
+                u.username = #{userName}
             </if>
         </where>
     </select>
 
-    <insert id="addUser" parameterType="User" >
-        insert into user (user_name,user_pwd,user_type,create_by)
-        values (#{userName},#{userPwd},#{userType},#{createBy})
-    </insert>
 </mapper>

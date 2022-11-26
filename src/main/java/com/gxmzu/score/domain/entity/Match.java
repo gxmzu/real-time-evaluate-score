@@ -18,7 +18,7 @@ public class Match extends BaseEntity implements Serializable {
     /**
      * 比赛id
      */
-    private long matchId;
+    private Long matchId;
 
     /**
      * 比赛名称
@@ -31,14 +31,33 @@ public class Match extends BaseEntity implements Serializable {
     private String info;
 
     /**
-     * 分制
+     * 最高分，默认100
      */
-    private double maxScore;
+    private Double maxScore;
 
     /**
-     * 评分规则
+     * 评分规则id
+     */
+    private String scoreRuleId;
+
+    /**
+     * 评分规则名称
      */
     private String scoreRuleName;
+
+    /**
+     * 活动开始时间，活动负责人负责的活动开始时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date startTime;
+
+    /**
+     * 活动结束时间，活动负责人负责的活动结束时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
 
     /**
      * 用户列表
@@ -54,7 +73,7 @@ public class Match extends BaseEntity implements Serializable {
      * 创建时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -66,14 +85,14 @@ public class Match extends BaseEntity implements Serializable {
      * 更新时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    public long getMatchId() {
+    public Long getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(long matchId) {
+    public void setMatchId(Long matchId) {
         this.matchId = matchId;
     }
 
@@ -93,12 +112,20 @@ public class Match extends BaseEntity implements Serializable {
         this.info = info;
     }
 
-    public double getMaxScore() {
+    public Double getMaxScore() {
         return maxScore;
     }
 
-    public void setMaxScore(double maxScore) {
+    public void setMaxScore(Double maxScore) {
         this.maxScore = maxScore;
+    }
+
+    public String getScoreRuleId() {
+        return scoreRuleId;
+    }
+
+    public void setScoreRuleId(String scoreRuleId) {
+        this.scoreRuleId = scoreRuleId;
     }
 
     public String getScoreRuleName() {
@@ -107,6 +134,22 @@ public class Match extends BaseEntity implements Serializable {
 
     public void setScoreRuleName(String scoreRuleName) {
         this.scoreRuleName = scoreRuleName;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public User[] getUserList() {
@@ -151,12 +194,15 @@ public class Match extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "match{" +
+        return "Match{" +
                 "matchId=" + matchId +
                 ", matchName='" + matchName + '\'' +
                 ", info='" + info + '\'' +
                 ", maxScore=" + maxScore +
+                ", scoreRuleId='" + scoreRuleId + '\'' +
                 ", scoreRuleName='" + scoreRuleName + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
                 ", userList=" + Arrays.toString(userList) +
                 ", createBy='" + createBy + '\'' +
                 ", createTime=" + createTime +

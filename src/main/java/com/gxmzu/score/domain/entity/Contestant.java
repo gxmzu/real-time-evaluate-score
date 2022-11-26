@@ -17,12 +17,12 @@ public class Contestant extends BaseEntity implements Serializable {
     /**
      * 参赛者id
      */
-    private long contestantId;
+    private Long contestantId;
 
     /**
      * 比赛id
      */
-    private long matchId;
+    private Long matchId;
 
     /**
      * 参赛者名称
@@ -37,7 +37,7 @@ public class Contestant extends BaseEntity implements Serializable {
     /**
      * 比赛顺序
      */
-    private long matchOrder;
+    private Long matchOrder;
 
     /**
      * 是否开启评分通道
@@ -47,12 +47,12 @@ public class Contestant extends BaseEntity implements Serializable {
     /**
      * 得分，保留两位小数
      */
-    private double score;
+    private Double score;
 
     /**
      * 排名
      */
-    private long rank;
+    private Long rank;
 
     /**
      * 创建人
@@ -63,7 +63,7 @@ public class Contestant extends BaseEntity implements Serializable {
      * 创建时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -75,22 +75,22 @@ public class Contestant extends BaseEntity implements Serializable {
      * 更新时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    public long getContestantId() {
+    public Long getContestantId() {
         return contestantId;
     }
 
-    public void setContestantId(long contestantId) {
+    public void setContestantId(Long contestantId) {
         this.contestantId = contestantId;
     }
 
-    public long getMatchId() {
+    public Long getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(long matchId) {
+    public void setMatchId(Long matchId) {
         this.matchId = matchId;
     }
 
@@ -110,11 +110,11 @@ public class Contestant extends BaseEntity implements Serializable {
         this.info = info;
     }
 
-    public long getMatchOrder() {
+    public Long getMatchOrder() {
         return matchOrder;
     }
 
-    public void setMatchOrder(long matchOrder) {
+    public void setMatchOrder(Long matchOrder) {
         this.matchOrder = matchOrder;
     }
 
@@ -126,19 +126,19 @@ public class Contestant extends BaseEntity implements Serializable {
         this.isOpen = isOpen;
     }
 
-    public double getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 
-    public long getRank() {
+    public Long getRank() {
         return rank;
     }
 
-    public void setRank(long rank) {
+    public void setRank(Long rank) {
         this.rank = rank;
     }
 

@@ -1,18 +1,15 @@
-package com.gxmzu.score.mapper;
+package com.gxmzu.score.service;
 
 import com.gxmzu.score.domain.entity.Score;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * @Author: https://github.com/gxmzu
- * @Date: 2022/11/11
- * @Description: 评分数据层
+ * @Date: 2022/11/10
+ * @Description: 打分模块
  */
-
-@Mapper
-public interface ScoreMapper {
+public interface IScoreService {
 
     /**
      * 获取某场比赛的评分信息
@@ -20,6 +17,6 @@ public interface ScoreMapper {
      * @param matchId 比赛id
      * @return 评分信息
      */
-    public List<Score> selectScoreList(Long matchId);
+    public List<Score> getScoreList(Long matchId);
 
 }

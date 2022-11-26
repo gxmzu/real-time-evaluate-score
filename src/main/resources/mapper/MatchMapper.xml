@@ -4,6 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxmzu.score.mapper.MatchMapper">
 
+    <cache eviction="FIFO" flushInterval="60000" readOnly="false" size="1024"/>
+
     <resultMap type="Match" id="MatchResult">
         <result property="matchId" column="match_id"/>
         <result property="matchName" column="match_name"/>
@@ -17,8 +19,8 @@
     </resultMap>
 
     <sql id="selectMatchVo">
-        select m.match_id, m.match_name, m.info, m.max_score, m.score_rule_name,m.create_by,
-        m.create_time, m.update_by, m.update_time
+        select m.match_id, m.match_name, m.info, m.max_score, m.score_rule_name, m.startTime,
+        m.endTime, m.create_by, m.create_time, m.update_by, m.update_time
         from `match` m
     </sql>
 
@@ -31,29 +33,6 @@
         </where>
 
     </select>
-
-    <select id="selectMatchByMatchName" parameterType="Match" resultMap="MatchResult">
-        <include refid="selectMatchVo"/>
-        <where>
-            <if test="matchName!=null and matchName!=''">
-                `match_name` = #{matchName}
-            </if>
-        </where>
-    </select>
-
-    <insert  id="addMatch" parameterType="Match" useGeneratedKeys="true" keyProperty="matchId" >
-        insert into `match` (match_name,info,max_score,score_rule_name,create_by)
-        values (#{matchName},#{info},#{maxScore},#{scoreRuleName},#{createBy})
-    </insert>
-
-    <update id="updateMatch" parameterType="Match">
-        update `match` set  match_name = #{matchName}, info = #{info}, max_score = #{maxScore}, score_rule_name = #{scoreRuleName}, update_by = #{updateBy}
-        where match_id = #{matchId}
-    </update>
-
-    <delete id="deleteMatch">
-        delete from `match` where match_id = #{matchId}
-    </delete>
 
 
 </mapper>
