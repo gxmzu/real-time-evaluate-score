@@ -12,6 +12,8 @@
         <result property="info" column="info"/>
         <result property="maxScore" column="max_score"/>
         <result property="scoreRuleName" column="score_rule_name"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
@@ -19,8 +21,8 @@
     </resultMap>
 
     <sql id="selectMatchVo">
-        select m.match_id, m.match_name, m.info, m.max_score, m.score_rule_name, m.startTime,
-        m.endTime, m.create_by, m.create_time, m.update_by, m.update_time
+        select m.match_id, m.match_name, m.info, m.max_score, m.score_rule_name, m.start_time,
+        m.end_time, m.create_by, m.create_time, m.update_by, m.update_time
         from `match` m
     </sql>
 

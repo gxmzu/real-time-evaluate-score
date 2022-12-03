@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : localhost_mysql_3306
  Source Server Type    : MySQL
  Source Server Version : 50737
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 25/11/2022 00:09:08
+ Date: 04/12/2022 00:03:15
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `contestant`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
-  `update_by` datetime(0) NULL DEFAULT NULL COMMENT '修改人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`contestant_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 10009 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '参赛对象表' ROW_FORMAT = Dynamic;
 
@@ -66,7 +66,7 @@ CREATE TABLE `match`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
-  `update_by` datetime(0) NULL DEFAULT NULL COMMENT '修改人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`match_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2001 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '比赛信息表' ROW_FORMAT = Dynamic;
 
@@ -88,15 +88,15 @@ CREATE TABLE `score`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
-  `update_by` datetime(0) NULL DEFAULT NULL COMMENT '修改人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`match_id`, `user_id`, `contestant_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评委评分表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of score
 -- ----------------------------
-INSERT INTO `score` VALUES (2000, 1001, 10001, 80, NULL, '2022-11-24 23:37:25', NULL, NULL, NULL);
-INSERT INTO `score` VALUES (2000, 1002, 10000, 89, NULL, '2022-11-25 00:02:31', NULL, NULL, NULL);
+INSERT INTO `score` VALUES (2000, 1001, 10001, 80, NULL, '2022-11-24 23:37:25', '', '2022-11-25 13:21:57', '');
+INSERT INTO `score` VALUES (2000, 1002, 10000, 89, NULL, '2022-11-25 00:02:31', '', '2022-11-25 13:21:59', '');
 
 -- ----------------------------
 -- Table structure for user
@@ -111,7 +111,7 @@ CREATE TABLE `user`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
-  `update_by` datetime(0) NULL DEFAULT NULL COMMENT '修改人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
