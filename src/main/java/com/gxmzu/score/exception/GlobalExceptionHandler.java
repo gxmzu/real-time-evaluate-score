@@ -29,8 +29,9 @@ public class GlobalExceptionHandler extends RuntimeException {
     @ExceptionHandler(AccessDeniedException.class)
     public AjaxResult handleAccessDeniedException(AccessDeniedException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
+        Integer code = e.getCode();
         log.error("请求地址'{}',权限校验失败'{}'", requestURI, e.getMessage());
-        return AjaxResult.error(HttpStatus.UNAUTHENTICATED, "未认证的请求");
+        return StringUtils.isNotNull(code) ? AjaxResult.error(code, e.getMessage()) : AjaxResult.error(HttpStatus.ERROR, e.getMessage());
     }
 
     /**
@@ -51,10 +52,7 @@ public class GlobalExceptionHandler extends RuntimeException {
     public AjaxResult handleServiceException(ServiceException e, HttpServletRequest request) {
         log.error(e.getMessage(), e);
         Integer code = e.getCode();
-        if (StringUtils.isNotNull(code)) {
-            return AjaxResult.error(HttpStatus.ERROR, e.getMessage());
-        }
-        return AjaxResult.error(code, e.getMessage());
+        return StringUtils.isNotNull(code) ? AjaxResult.error(code, e.getMessage()) : AjaxResult.error(HttpStatus.ERROR, e.getMessage());
     }
 
     /**

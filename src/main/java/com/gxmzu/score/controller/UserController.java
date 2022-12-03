@@ -41,18 +41,12 @@ public class UserController extends BaseController {
      * @return 用户列表
      */
     @GetMapping("/list")
-    public AjaxResult getUserList(HttpServletRequest request, User user) {
-        User u = tokenService.getUser(request);
-        if (Constants.ADMIN.equals(u.getUserType())) {
-            user.setUserType(Constants.ADMIN);
-        } else if (Constants.PRINCIPAL.equals(u.getUserType())) {
-            user.setUserType(Constants.PRINCIPAL);
-        } else {
-            throw new AccessDeniedException("未授权");
-        }
+    public AjaxResult getUserList(User user) {
         startPage(user);
         List<User> list = userService.getUserList(user);
         return getDataTable(list);
     }
+
+
 
 }

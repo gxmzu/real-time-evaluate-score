@@ -7,13 +7,38 @@ package com.gxmzu.score.exception;
  */
 public class AccessDeniedException extends RuntimeException {
 
-    public AccessDeniedException(){}
+    /**
+     * 错误码
+     */
+    private Integer code;
 
-    public AccessDeniedException(String msg) {
-        super(msg);
+    /**
+     * 错误提示
+     */
+    private String message;
+
+    public AccessDeniedException() {
     }
 
-    public AccessDeniedException(String msg, Throwable t) {
-        super(msg, t);
+    public AccessDeniedException(String msg, Integer code) {
+        this.code = code;
+        this.message = msg;
+    }
+
+    public Integer getCode() {
+        return this.code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    @Override
+    public String getMessage() {
+        return this.message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
