@@ -22,7 +22,10 @@ public class VerifyUser {
      * {@link com.gxmzu.score.domain.entity.User}
      */
     private static final List<String> ADMIN_PERMISSIONS = new ArrayList<String>() {{
+        add("/config/list");
+        add("/config/add");
         add("/user/list");
+        add("/user/add");
     }};
 
     /**
@@ -31,6 +34,7 @@ public class VerifyUser {
      */
     private static final List<String> PRINCIPAL_PERMISSIONS = new ArrayList<String>() {{
         add("/user/list");
+        add("/user/generate");
     }};
 
     /**
@@ -67,9 +71,30 @@ public class VerifyUser {
         String userType = user.getUserType();
         List<String> list = USER_MAP.get(userType);
         if (list != null && list.size() > 0) {
-            return list.contains(url);
+            return compareTo(list, url);
         } else {
             return false;
         }
+    }
+
+    /**
+     * 从列表匹配url
+     * 如果匹配不到，则去掉url最后一层/
+     * 例如：请求/user/delete/3
+     * 从列表匹配不到
+     * 删除最后的/3，得到/user/delete
+     * 从列表匹配到
+     * 结束
+     * @param list 列表
+     * @param url url
+     * @return 匹配结果
+     */
+    private boolean compareTo(List<String> list, String url) {
+        if (list.contains(url)) {
+            return true;
+        }
+        int index = url.lastIndexOf("/");
+        String newUrl = url.substring(0, index);
+        return list.contains(newUrl);
     }
 }
