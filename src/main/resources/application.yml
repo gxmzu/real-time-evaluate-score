@@ -42,6 +42,8 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 1000MB
+  resources:
+    add-mappings: false
   redis:
     host: 127.0.0.1
     port: 6379
@@ -76,7 +78,7 @@ pagehelper:
 logging:
   level:
     com.gxmzu.score.mapper: debug
-    
+
 
 
 
