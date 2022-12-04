@@ -17,18 +17,36 @@ import java.util.Map;
 @Service
 public class VerifyUser {
 
+    /**
+     * 管理员接口
+     * {@link com.gxmzu.score.domain.entity.User}
+     */
     private static final List<String> ADMIN_PERMISSIONS = new ArrayList<String>() {{
         add("/user/list");
     }};
 
+    /**
+     * 活动负责人接口
+     * {@link com.gxmzu.score.domain.entity.User}
+     */
     private static final List<String> PRINCIPAL_PERMISSIONS = new ArrayList<String>() {{
         add("/user/list");
     }};
 
+    /**
+     * 主评委接口
+     * {@link com.gxmzu.score.domain.entity.User}
+     */
     private static final List<String> LEAD_JUDGE_PERMISSIONS = new ArrayList<String>() {{
+        add("/websocket/score");
     }};
 
+    /**
+     * 评委接口
+     * {@link com.gxmzu.score.domain.entity.User}
+     */
     private static final List<String> JUDGE_PERMISSIONS = new ArrayList<String>() {{
+        add("/websocket/score");
     }};
 
     private static final Map<String, List<String>> USER_MAP = new HashMap<String, List<String>>() {{

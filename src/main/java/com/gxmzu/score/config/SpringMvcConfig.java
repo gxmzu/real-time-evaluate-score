@@ -32,6 +32,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
         registration.excludePathPatterns(
                 "/user/login",
                 "/score/list",
+                "/websocket/score",
                 "/**/*.html",
                 "/**/*.js",
                 "/**/*.css"
