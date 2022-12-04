@@ -33,7 +33,8 @@ start(){
   if [ $? -eq "0" ]; then
     echo "${APP_NAME} is already running. pid=${pid} ."
   else
-    nohup java $JVM_OPTS -jar $APP_PATH -Dspring.config.location=../config/application.yml  > $LOG_FILE 2>&1 &
+    cp ../config/application.yml ./
+    nohup java $JVM_OPTS -jar  $APP_PATH -Dspring.config.location=application.yml > $LOG_FILE 2>&1 &
     echo "${APP_NAME} started"
   fi
 }
