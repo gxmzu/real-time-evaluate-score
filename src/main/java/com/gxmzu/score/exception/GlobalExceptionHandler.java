@@ -10,6 +10,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -93,6 +94,17 @@ public class GlobalExceptionHandler extends RuntimeException {
         log.error(e.getMessage(), e);
         String message = e.getBindingResult().getFieldError().getDefaultMessage();
         return AjaxResult.error(HttpStatus.ERROR, message);
+    }
+
+    /**
+     * 请求参数类型异常
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public Object MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e
+            , HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}'，'{}'", requestURI, e.getMessage());
+        return AjaxResult.error(HttpStatus.METHODARGUMENTTYPEMISMATCH, "请求参数类型有误");
     }
 
 }

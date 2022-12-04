@@ -40,11 +40,16 @@ public class HttpStatus {
     /**
      * 错误的请求参数
      */
-    public static final int ERROR_QUERY = 521;
+    public static final int ERROR_QUERY = 522;
+
+    /**
+     * 请求参数类型不匹配
+     */
+    public static final int METHODARGUMENTTYPEMISMATCH = 523;
 
     /**
      * 用户不存在/密码错误
      */
-    public static final int LOGIN_ERROR = 522;
+    public static final int LOGIN_ERROR = 524;
 
 }
