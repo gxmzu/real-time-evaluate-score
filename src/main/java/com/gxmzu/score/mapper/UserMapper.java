@@ -28,4 +28,10 @@ public interface UserMapper {
      */
     public User selectUserByUserName(User user);
 
+    /**
+     * 添加用户
+     * @param user 用户信息
+     * @return 添加结果
+     */
+    public int insertUser(User user);
 }

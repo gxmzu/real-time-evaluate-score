@@ -21,4 +21,12 @@ public interface MatchMapper {
      */
     public List<Match> selectMatchList(Match match);
 
+    /**
+     * 获取比赛信息
+     *
+     * @param match 比赛查询信息
+     * @return 比赛信息
+     */
+    public Match selectMatch(Match match);
+
 }

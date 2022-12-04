@@ -1,9 +1,12 @@
 package com.gxmzu.score.service;
 
+import com.gxmzu.score.domain.entity.Config;
 import com.gxmzu.score.domain.entity.Match;
 import com.gxmzu.score.domain.entity.Score;
+import com.gxmzu.score.mapper.ConfigMapper;
 import com.gxmzu.score.mapper.MatchMapper;
 import com.gxmzu.score.mapper.ScoreMapper;
+import com.gxmzu.score.utils.Constants;
 import com.gxmzu.score.utils.RedisCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,13 +45,21 @@ public class AfterRunner implements ApplicationRunner {
     @Resource
     private MatchMapper matchMapper;
 
+    @Resource
+    private ConfigMapper configMapper;
+
     @Override
     @Async("threadPoolTaskExecutor")
     public void run(ApplicationArguments args) {
         log.info("=======加载初始化数据=======");
         log.info("1、测试异步线程");
         asyncService.test();
-        log.info("2、加载正在进行的比赛数据到redis");
+        log.info("2、加载系统配置数据到redis");
+        List<Config> configList = configMapper.selectConfigList(new Config());
+        for (Config config : configList) {
+            redisCache.setCacheObject(Constants.SCORE_CONFIG_KEY + config.getConfigKey(), config.getConfigValue());
+        }
+        log.info("3、加载正在进行的比赛数据到redis");
         List<Match> matchList = matchMapper.selectMatchList(new Match());
         for (int i = 0; i < matchList.size(); i++) {
             Match match = matchList.get(i);
@@ -60,7 +71,7 @@ public class AfterRunner implements ApplicationRunner {
                 redisCache.setCacheObject("score:match:" + match.getMatchId() + ":info", match);
             }
         }
-        log.info("3、加载所有评分数据到redis");
+        log.info("4、加载所有评分数据到redis");
         List<Score> scoreList = scoreMapper.selectScoreList(0L);
         Map<Long, List<Score>> map = scoreList.stream().collect(Collectors.groupingBy(Score::getMatchId));
         for (Long matchId : map.keySet()) {

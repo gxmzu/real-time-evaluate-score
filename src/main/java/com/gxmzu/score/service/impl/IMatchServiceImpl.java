@@ -1,9 +1,12 @@
 package com.gxmzu.score.service.impl;
 
 import com.gxmzu.score.domain.entity.Match;
+import com.gxmzu.score.domain.entity.UserMatch;
+import com.gxmzu.score.mapper.MatchMapper;
 import com.gxmzu.score.service.IMatchService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -14,8 +17,18 @@ import java.util.List;
 @Service
 public class IMatchServiceImpl implements IMatchService {
 
+    @Resource
+    private MatchMapper matchMapper;
+
     @Override
     public List<Match> getMatchList(Match match) {
-        return null;
+        return matchMapper.selectMatchList(match);
+    }
+
+    @Override
+    public Match getMatchByUserId(UserMatch userMatch) {
+        Match match = new Match();
+        match.setMatchId(userMatch.getMatchId());
+        return matchMapper.selectMatch(match);
     }
 }

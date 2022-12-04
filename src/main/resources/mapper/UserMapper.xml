@@ -50,4 +50,27 @@
         </where>
     </select>
 
+    <insert id="insertUser" parameterType="User">
+        insert into user (user_id, username, password, user_type, nick_name,
+        create_by, create_time) values(
+            0,
+            <if test="userName!=null and userName!=''">
+                #{userName},
+            </if>
+            <if test="password!=null and password!=''">
+                #{password},
+            </if>
+            <if test="userType!=null and userType!=''">
+                #{userType},
+            </if>
+            <if test="nickName!=null and nickName!=''">
+                #{nickName},
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                #{createBy},
+            </if>
+            now()
+        )
+    </insert>
+
 </mapper>

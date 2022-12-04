@@ -30,6 +30,10 @@ public class Constants {
      */
     public static final String LOGIN_TOKEN_KEY = "login_tokens:";
 
+    /**
+     * 系统配置 redis key
+     */
+    public static final String SCORE_CONFIG_KEY = "score_configs:";
 
     /**
      * 管理员

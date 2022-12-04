@@ -1,6 +1,7 @@
 package com.gxmzu.score.service;
 
 import com.gxmzu.score.domain.entity.Match;
+import com.gxmzu.score.domain.entity.UserMatch;
 
 import java.util.List;
 
@@ -19,4 +20,11 @@ public interface IMatchService {
      */
     public List<Match> getMatchList(Match match);
 
+    /**
+     * 比赛信息
+     * @param userMatch 用户比赛信息
+     *
+     * @return 比赛信息
+     */
+    public Match getMatchByUserId(UserMatch userMatch);
 }

@@ -29,6 +29,9 @@
     <select id="selectMatchList" parameterType="Match" resultMap="MatchResult">
         <include refid="selectMatchVo"/>
         <where>
+            <if test="matchId!=0">
+                `match_id` = #{matchId}
+            </if>
             <if test="matchName!=null and matchName!=''">
                 `match_name` = #{matchName}
             </if>
@@ -36,5 +39,30 @@
 
     </select>
 
+    <select id="selectMatch" parameterType="Match" resultMap="MatchResult">
+        <include refid="selectMatchVo"/>
+        <where>
+            <if test="matchId!=0">
+                `match_id` = #{matchId}
+            </if>
+            <if test="matchName!=null and matchName!=''">
+                `match_name` = #{matchName}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="getMatchByUserId" parameterType="Match" resultMap="MatchResult">
+        <include refid="selectMatchVo"/>
+        <where>
+            <if test="matchId!=0">
+                `match_id` = #{matchId}
+            </if>
+            <if test="matchName!=null and matchName!=''">
+                `match_name` = #{matchName}
+            </if>
+        </where>
+
+    </select>
 
 </mapper>

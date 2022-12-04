@@ -2,8 +2,10 @@ package com.gxmzu.score.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gxmzu.score.domain.BaseEntity;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,11 +24,13 @@ public class User extends BaseEntity implements Serializable {
     /**
      * 用户名
      */
+    @Length(min = 6, max = 6, message = "用户名只能为6")
     private String userName;
 
     /**
      * 密码
      */
+    @NotBlank(message = "密码为必填项")
     private String password;
 
     /**

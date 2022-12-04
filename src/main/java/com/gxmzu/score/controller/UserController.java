@@ -3,14 +3,12 @@ package com.gxmzu.score.controller;
 import com.gxmzu.score.domain.AjaxResult;
 import com.gxmzu.score.domain.entity.User;
 import com.gxmzu.score.domain.model.LoginBody;
-import com.gxmzu.score.exception.AccessDeniedException;
-import com.gxmzu.score.service.TokenService;
+import com.gxmzu.score.exception.ServiceException;
 import com.gxmzu.score.service.IUserService;
-import com.gxmzu.score.utils.Constants;
+import com.gxmzu.score.utils.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -25,21 +23,11 @@ public class UserController extends BaseController {
     @Resource
     private IUserService userService;
 
-    @Resource
-    private TokenService tokenService;
-
-
     @PostMapping("/login")
     public AjaxResult login(@RequestBody LoginBody loginBody) {
         return userService.login(loginBody.getUserName(), loginBody.getPassword());
     }
 
-    /**
-     * 获取用户列表
-     *
-     * @param user 用户查询信息
-     * @return 用户列表
-     */
     @GetMapping("/list")
     public AjaxResult getUserList(User user) {
         startPage(user);
@@ -47,6 +35,21 @@ public class UserController extends BaseController {
         return getDataTable(list);
     }
 
+    @PostMapping("/add")
+    public AjaxResult addPrincipal(User user) {
+        int row = userService.addPrincipal(user);
+        if (row > 0) {
+            return AjaxResult.success();
+        }
+        return AjaxResult.error(HttpStatus.ERROR,"添加失败，请联系管理员");
+    }
 
-
+    @PostMapping("/generate")
+    public AjaxResult generate(@RequestParam int number) throws ServiceException {
+        int row = userService.addJudge(number);
+        if (row > 0) {
+            return AjaxResult.success();
+        }
+        return AjaxResult.error(HttpStatus.ERROR,"添加失败，请联系管理员");
+    }
 }

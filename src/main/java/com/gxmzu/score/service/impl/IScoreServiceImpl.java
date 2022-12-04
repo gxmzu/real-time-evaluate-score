@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @Author: https://github.com/gxmzu
  * @Date: 2022/11/10
- * @Description:
+ * @Description: 评分服务实现类
  */
 @Service
 public class IScoreServiceImpl implements IScoreService {
