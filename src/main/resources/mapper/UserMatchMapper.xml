@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxmzu.score.mapper.UserMatchMapper">
+
+    <cache eviction="FIFO" flushInterval="60000" readOnly="false" size="1024"/>
+
+    <resultMap type="Match" id="UserMatchResult">
+        <result property="userId" column="user_id"/>
+        <result property="matchId" column="match_id"/>
+    </resultMap>
+
+    <sql id="selectUserMatchVo">
+        select um.match_id, um.user_id
+        from user_match um
+    </sql>
+
+    <select id="selectUserMatchList" parameterType="UserMatch" resultMap="UserMatchResult">
+        <include refid="selectUserMatchVo"/>
+        <where>
+            <if test="matchId!=0">
+                match_id = #{matchId}
+            </if>
+            <if test="matchId!=0">
+                user_id = #{matchId}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="selectUserMatch" parameterType="UserMatch" resultMap="UserMatchResult">
+        <include refid="selectUserMatchVo"/>
+        <where>
+            <if test="matchId!=0">
+                match_id = #{matchId}
+            </if>
+            <if test="matchId!=0">
+                user_id = #{matchId}
+            </if>
+        </where>
+
+    </select>
+</mapper>
