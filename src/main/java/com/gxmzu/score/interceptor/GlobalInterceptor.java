@@ -42,7 +42,12 @@ public class GlobalInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        User user = tokenService.getUser(request);
+        User user = null;
+        try {
+            user = tokenService.getUser(request);
+        } catch (Exception e) {
+            throw new AccessDeniedException("未认证", HttpStatus.UNAUTHENTICATED);
+        }
         String url = request.getRequestURI();
         if (user == null) {
             throw new AccessDeniedException("未认证", HttpStatus.UNAUTHENTICATED);
